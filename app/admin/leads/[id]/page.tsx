@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getLeadById } from "@/lib/data/admin-leads";
 import { LeadStatusForm } from "@/components/admin/LeadStatusForm";
+import { LeadGrantForm } from "@/components/admin/LeadGrantForm";
 
 export const metadata: Metadata = { title: "Lead detail — Admin" };
 
@@ -93,12 +94,26 @@ export default async function AdminLeadDetailPage({
         </section>
       </div>
 
-      <section className="mt-8 rounded-2xl border border-navy-900/10 bg-white p-6">
-        <h2 className="font-semibold text-navy-950">Status &amp; notes</h2>
-        <div className="mt-4">
-          <LeadStatusForm leadId={lead.id} initialStatus={lead.status} initialNotes={lead.notes ?? ""} />
-        </div>
-      </section>
+      <div className="mt-8 grid gap-8 md:grid-cols-2">
+        <section className="rounded-2xl border border-navy-900/10 bg-white p-6">
+          <h2 className="font-semibold text-navy-950">Status &amp; notes</h2>
+          <div className="mt-4">
+            <LeadStatusForm leadId={lead.id} initialStatus={lead.status} initialNotes={lead.notes ?? ""} />
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-navy-900/10 bg-white p-6">
+          <h2 className="font-semibold text-navy-950">Grant tracker</h2>
+          <div className="mt-4">
+            <LeadGrantForm
+              leadId={lead.id}
+              initialGrantName={lead.grant_name ?? ""}
+              initialGrantStatus={lead.grant_status ?? ""}
+              initialGrantNotes={lead.grant_notes ?? ""}
+            />
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
