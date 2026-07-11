@@ -4,18 +4,20 @@ import { ADMIN_COOKIE_NAME, isValidAdminToken } from "@/lib/admin/auth";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const { response, user } = await updateSession(request);
 
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    const token = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
-    const valid = await isValidAdminToken(token);
-    if (!valid) {
+    const legacyToken = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+    const legacyValid = await isValidAdminToken(legacyToken);
+
+    if (!user && !legacyValid) {
       const url = request.nextUrl.clone();
       url.pathname = "/admin/login";
       return NextResponse.redirect(url);
     }
   }
 
-  return await updateSession(request);
+  return response;
 }
 
 export const config = {

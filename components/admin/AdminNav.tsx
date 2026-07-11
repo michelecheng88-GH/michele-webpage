@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 export function AdminNav() {
   const pathname = usePathname();
   const router = useRouter();
 
   async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin/login");
     router.refresh();
