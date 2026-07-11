@@ -1,1 +1,22 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-navy-950: #0a1428;
+  --color-navy-900: #0f1f3d;
+  --color-navy-800: #16294f;
+  --color-navy-700: #1f3766;
+  --color-navy-600: #2b4980;
+  --color-gold-500: #c9a227;
+  --color-gold-400: #d9b94a;
+  --color-gold-300: #e6cd7a;
+  --color-cream-50: #faf8f3;
+  --color-cream-100: #f3efe4;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-cream-50);
+  color: var(--color-navy-950);
+}
