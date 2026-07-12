@@ -3,12 +3,16 @@ import { createClient } from "@/lib/supabase/server";
 export type LeadQuizResponse = {
   profile_band: string;
   total_score: number;
-  answers: Record<string, number>;
-  s_score: number;
-  a_score: number;
-  f_score: number;
-  e_score: number;
-  r_score: number;
+  /** Old quiz: {q1: 2, ...}. New quiz: {context: {...}, responses: [...]}. */
+  answers: {
+    context?: { industry?: string; challenge?: string; area?: string };
+    responses?: unknown[];
+  } & Record<string, unknown>;
+  s_score: number | null;
+  a_score: number | null;
+  f_score: number | null;
+  e_score: number | null;
+  r_score: number | null;
   recommendations: { title: string; body: string }[] | null;
 };
 

@@ -76,13 +76,28 @@ export default async function AdminLeadDetailPage({
             <>
               <p className="mt-3 text-lg font-bold text-navy-950">{quiz.profile_band}</p>
               <p className="text-sm text-navy-800/70">Score: {quiz.total_score} / 100</p>
+              {quiz.answers?.context && (
+                <dl className="mt-4 flex flex-col gap-1 border-b border-navy-900/10 pb-4 text-sm">
+                  {quiz.answers.context.industry && (
+                    <Row label="Industry" value={quiz.answers.context.industry} />
+                  )}
+                  {quiz.answers.context.challenge && (
+                    <Row label="Challenge" value={quiz.answers.context.challenge} />
+                  )}
+                  {quiz.answers.context.area && (
+                    <Row label="Focus area" value={quiz.answers.context.area} />
+                  )}
+                </dl>
+              )}
               <div className="mt-4 flex flex-col gap-2">
                 {(["S", "A", "F", "E", "R"] as const).map((key) => {
-                  const score = quiz[`${key.toLowerCase()}_score` as keyof typeof quiz] as number;
+                  const score = quiz[`${key.toLowerCase()}_score` as keyof typeof quiz] as
+                    | number
+                    | null;
                   return (
                     <div key={key} className="flex items-center justify-between text-sm">
                       <span className="text-navy-800">{DIMENSION_LABELS[key]}</span>
-                      <span className="font-medium text-navy-950">{score}/8</span>
+                      <span className="font-medium text-navy-950">{score ?? "—"}/8</span>
                     </div>
                   );
                 })}

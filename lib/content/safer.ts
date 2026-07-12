@@ -9,36 +9,36 @@ export const SAFER_DIMENSIONS: SaferDimension[] = [
   {
     key: "S",
     name: "Sensitivity",
-    tagline: "Know what data you hold and how exposed it is.",
+    tagline: "Not all data is meant for AI.",
     description:
-      "Do you know where your sensitive operational and customer data lives, who can touch it, and what happens if an AI tool sees it? Sensitivity is the starting discipline — before automation, before insight.",
+      "Are you pointing AI at personal data (PDPA), patient records, or confidential business information? The more sensitive the data, the stronger the case to avoid — or strictly control — AI use.",
   },
   {
     key: "A",
     name: "Accuracy",
-    tagline: "Garbage in, garbage out — at scale.",
+    tagline: "AI can assist. It cannot be accountable.",
     description:
-      "AI amplifies whatever it's fed. If your inventory counts, timesheets, or customer records are inconsistent, AI won't fix that — it will confidently repeat the error, faster.",
+      "Does the task demand 100% correctness — clinical, financial, or regulatory precision? Where errors carry legal weight, AI must never be the final decision-maker.",
   },
   {
     key: "F",
     name: "Framing",
-    tagline: "A vague goal gives AI nothing to aim at.",
+    tagline: "AI amplifies clarity — not confusion.",
     description:
-      "\"Use AI to grow the business\" isn't a target. \"Cut stock-take time by 40% in 90 days\" is. Framing is how clearly your team has defined the problem before reaching for a tool.",
+      "Is the problem clearly defined, measurable, and outcome-driven? A vague brief in means noise out: AI multiplies whatever clarity — or confusion — you feed it.",
   },
   {
     key: "E",
     name: "Explainability",
-    tagline: "If leadership can't explain it, they won't trust it.",
+    tagline: "If you can't explain it, you can't defend it.",
     description:
-      "Can your ops manager tell the CFO *why* the model flagged that anomaly? Decisions that can't be explained don't get acted on — they get shelved.",
+      "Can you show how a result was derived, and defend it to auditors, regulators, or customers? Decisions you can't explain are risks you can't manage.",
   },
   {
     key: "R",
     name: "Responsibility",
-    tagline: "Someone owns the outcome, always.",
+    tagline: "AI generates outputs. Humans carry responsibility.",
     description:
-      "Governance, change management, and accountability determine whether an AI pilot survives contact with your actual team — or quietly dies in month two.",
+      "Who is accountable when things go wrong — you, your organisation, or the system? If ownership is unclear, don't rely on AI.",
   },
 ];

@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
-import type { QuizScoreResult } from "@/lib/quiz/scoring";
-import type { Recommendation } from "@/lib/quiz/recommendations";
+import type { QuizResultPayload } from "@/lib/quiz/engine";
+import type { Recommendation, SaferDimension } from "@/lib/quiz/schema";
 
 export type LeadInput = {
   first_name: string;
@@ -27,20 +27,27 @@ export async function insertLead(input: LeadInput): Promise<string> {
 
 export async function insertQuizResponse(
   leadId: string,
-  result: QuizScoreResult,
+  payload: QuizResultPayload,
   recommendations: Recommendation[],
 ): Promise<void> {
   const supabase = createClient();
+
+  const dimScore = (dim: SaferDimension): number | null =>
+    payload.dimensions.find((d) => d.dimension === dim)?.score ?? null;
+
   const { error } = await supabase.from("quiz_responses").insert({
     lead_id: leadId,
-    answers: result.answers,
-    total_score: result.totalScore,
-    profile_band: result.band,
-    s_score: result.dimensionScores.S,
-    a_score: result.dimensionScores.A,
-    f_score: result.dimensionScores.F,
-    e_score: result.dimensionScores.E,
-    r_score: result.dimensionScores.R,
+    answers: {
+      context: payload.context,
+      responses: payload.answers,
+    },
+    total_score: payload.totalScore,
+    profile_band: payload.verdict.band,
+    s_score: dimScore("S"),
+    a_score: dimScore("A"),
+    f_score: dimScore("F"),
+    e_score: dimScore("E"),
+    r_score: dimScore("R"),
     recommendations,
   });
 

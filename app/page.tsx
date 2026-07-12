@@ -145,11 +145,11 @@ export default async function HomePage() {
               The framework
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy-950">
-              The S.A.F.E.R. AI™ Framework
+              The S.A.F.E.R. AI™ Decision Framework
             </h2>
             <p className="mt-4 text-navy-800/80">
-              Five dimensions that determine whether AI will help your business — or expose
-              the cracks already in it.
+              Most frameworks tell you how to use AI. S.A.F.E.R. asks the harder question
+              first: should you be using it at all — right now? Five checks decide.
             </p>
           </div>
 
@@ -165,6 +165,12 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
+
+          <p className="mt-8 rounded-xl bg-navy-950 px-5 py-4 text-center text-sm text-cream-100/90">
+            <span className="font-semibold text-gold-400">The decision rule:</span> ✅ all 5 checks
+            pass → use AI confidently &nbsp;·&nbsp; ⚠️ 1–2 risks → use AI with controls
+            &nbsp;·&nbsp; ❌ 3+ risks → do <em>not</em> use AI. Yet.
+          </p>
         </div>
       </section>
 
