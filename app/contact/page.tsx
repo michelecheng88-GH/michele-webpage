@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState, type FormEvent, type ReactNode } from "react";
-import { insertContactLead } from "@/lib/data/contact";
 
 type FormState = {
   first_name: string;
@@ -55,14 +54,19 @@ export default function ContactPage() {
 
     setSubmitting(true);
     try {
-      await insertContactLead({
-        first_name: form.first_name.trim(),
-        last_name: form.last_name.trim(),
-        email: form.email.trim(),
-        phone: form.phone.trim(),
-        help: form.help.trim(),
-        company: form.company.trim() || undefined,
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          first_name: form.first_name.trim(),
+          last_name: form.last_name.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          help: form.help.trim(),
+          company: form.company.trim() || undefined,
+        }),
       });
+      if (!res.ok) throw new Error("Request failed");
       setSubmitted(true);
     } catch {
       setSubmitError("Something went wrong — please try again.");
