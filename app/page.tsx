@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getServices, type Service } from "@/lib/data/services";
 import { SAFER_DIMENSIONS } from "@/lib/content/safer";
+import { MicheleAvatar } from "@/components/MicheleAvatar";
 
 export default async function HomePage() {
   let services: Service[] = [];
@@ -32,13 +33,18 @@ export default async function HomePage() {
             For Singapore SME leaders
           </p>
           <h1 className="text-4xl font-bold leading-tight tracking-tight text-navy-950 md:text-6xl">
-            Your AI pilot isn&apos;t failing because of the technology.
+            AI doesn&apos;t fail because of the technology. It fails because the business
+            underneath isn&apos;t ready.
           </h1>
           <p className="mt-6 text-lg text-navy-800 md:text-xl">
-            I help COOs, CFOs, and GMs find exactly where their AI readiness is stuck —
-            using the S.A.F.E.R. AI™ framework, built from managing operations at national
-            scale. No hype. No jargon. A clear diagnostic and a plan you can act on this
-            quarter.
+            You can&apos;t automate what you can&apos;t see or measure. I help COOs, CFOs, and
+            GMs get the foundations right first — operational visibility and clean, structured
+            data; standardised, repeatable workflows; and clear ownership of the decision —
+            so AI scales a healthy business instead of amplifying a chaotic one.
+          </p>
+          <p className="mt-4 text-base text-navy-800/80">
+            Built from managing operations at national scale. No hype, no jargon — a clear
+            diagnostic and a plan you can act on this quarter.
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
             <Link
@@ -48,7 +54,7 @@ export default async function HomePage() {
               Take the Free S.A.F.E.R. AI Quiz
             </Link>
             <Link
-              href="/quiz"
+              href="/contact"
               className="rounded-full border border-navy-950/20 px-8 py-4 text-center text-sm font-semibold text-navy-950 transition hover:border-gold-500 hover:text-gold-500"
             >
               Book a Call
@@ -61,12 +67,7 @@ export default async function HomePage() {
       <section className="bg-navy-950 py-20 text-cream-50">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-[220px_1fr]">
           <div className="flex justify-center md:justify-start">
-            <div
-              aria-hidden
-              className="flex h-40 w-40 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-500 text-4xl font-bold text-navy-950 md:h-48 md:w-48"
-            >
-              MC
-            </div>
+            <MicheleAvatar className="h-40 w-40 md:h-48 md:w-48" />
           </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-gold-400">
@@ -196,6 +197,22 @@ export default async function HomePage() {
             </p>
           </div>
         </div>
+
+        {/* Measurable-outcome proof point */}
+        <div className="mt-6 rounded-3xl border border-navy-900/10 bg-white p-8">
+          <p className="text-sm font-semibold uppercase tracking-widest text-gold-500">
+            What &quot;ready&quot; looks like in numbers
+          </p>
+          <p className="mt-3 text-lg text-navy-900 md:text-xl">
+            Technology alone doesn&apos;t create ROI — a clear objective, process readiness, and
+            the discipline to act on the data do. Get those right and the outcomes are
+            concrete: reaching{" "}
+            <span className="font-bold text-navy-950">99%+ inventory accuracy through RFID</span>{" "}
+            let one operation cut safety-stock levels by{" "}
+            <span className="font-bold text-navy-950">~20%</span> — freeing working capital that
+            was previously locked in unnecessary inventory.
+          </p>
+        </div>
       </section>
 
       {/* Bottom dual CTA */}
@@ -215,7 +232,7 @@ export default async function HomePage() {
             Take the Free S.A.F.E.R. AI Quiz
           </Link>
           <Link
-            href="/quiz"
+            href="/contact"
             className="rounded-full border border-navy-950/20 px-8 py-4 text-sm font-semibold text-navy-950 transition hover:border-gold-500 hover:text-gold-500"
           >
             Book a Call

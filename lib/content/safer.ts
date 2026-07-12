@@ -18,27 +18,27 @@ export const SAFER_DIMENSIONS: SaferDimension[] = [
     name: "Accuracy",
     tagline: "AI can assist. It cannot be accountable.",
     description:
-      "Does the task demand 100% correctness — clinical, financial, or regulatory precision? Where errors carry legal weight, AI must never be the final decision-maker.",
+      "AI is only as accurate as the data beneath it — you cannot automate what you cannot measure as ground truth. Does the task demand 100% correctness (clinical, financial, or regulatory)? Where errors carry legal weight, AI must never be the final decision-maker.",
   },
   {
     key: "F",
     name: "Framing",
     tagline: "AI amplifies clarity — not confusion.",
     description:
-      "Is the problem clearly defined, measurable, and outcome-driven? A vague brief in means noise out: AI multiplies whatever clarity — or confusion — you feed it.",
+      "Is the problem clearly defined, measurable, and outcome-driven? If problem statement is NOT clear → AI will produce noise, not value.",
   },
   {
     key: "E",
     name: "Explainability",
     tagline: "If you can't explain it, you can't defend it.",
     description:
-      "Can you show how a result was derived, and defend it to auditors, regulators, or customers? Decisions you can't explain are risks you can't manage.",
+      "Can you show how a result was derived, and defend it to auditors, regulators, or customers? A decision your team cannot explain is one it cannot stand behind — or safely repeat across markets.",
   },
   {
     key: "R",
     name: "Responsibility",
     tagline: "AI generates outputs. Humans carry responsibility.",
     description:
-      "Who is accountable when things go wrong — you, your organisation, or the system? If ownership is unclear, don't rely on AI.",
+      "The biggest barrier to AI is rarely the technology — it is an organisation that hasn't decided who owns the outcome. Who is accountable when things go wrong: you, your organisation, or the system? If ownership is unclear, don't rely on AI.",
   },
 ];

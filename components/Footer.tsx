@@ -26,7 +26,7 @@ export function Footer() {
         <div className="flex flex-col gap-2 text-sm">
           <p className="font-semibold text-gold-400">Get in touch</p>
           <p className="text-cream-100/70">Singapore</p>
-          <Link href="/quiz" className="text-cream-100/70 hover:text-gold-300">
+          <Link href="/contact" className="text-cream-100/70 hover:text-gold-300">
             Book a 30-min call →
           </Link>
         </div>

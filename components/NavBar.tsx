@@ -30,7 +30,7 @@ export function NavBar() {
             </Link>
           ))}
           <Link
-            href="/quiz"
+            href="/contact"
             className="rounded-full bg-navy-950 px-5 py-2 text-sm font-semibold text-cream-50 transition hover:bg-gold-500 hover:text-navy-950"
           >
             Book a Call
@@ -59,6 +59,13 @@ export function NavBar() {
               {link.label}
             </Link>
           ))}
+          <Link
+            href="/contact"
+            onClick={() => setOpen(false)}
+            className="py-2 text-sm font-semibold text-gold-500"
+          >
+            Book a Call
+          </Link>
         </div>
       )}
     </header>
