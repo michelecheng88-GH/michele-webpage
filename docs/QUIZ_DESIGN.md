@@ -19,6 +19,7 @@ Level 2  Challenge       10 business problems (revenue, speed, cost, leads, HR, 
 Level 3  Focus area      1) Physical & Digital Asset Management
                          2) Emerging Technology & AI Guardrails
                          3) Sustainability & Green Compliance
+                         4) Others (free text — generic diagnostics)
 Level 4  Diagnostics     10 S.A.F.E.R. questions specific to the chosen area
                          (2 per dimension, each option graded risk 0/1/2)
 Level 5  Follow-ups      drill-down questions triggered only by risky answers
@@ -26,15 +27,23 @@ Level 5  Follow-ups      drill-down questions triggered only by risky answers
 
 Levels 1–3 give every result its context; levels 4–5 do the diagnosis.
 
-## Scoring — the decision rule
+## Scoring — severity, not just a count
+
+AI inherently carries residual risk, so the verdict isn't a raw headcount of
+flagged dimensions — it's driven by **severity first, count second**:
 
 - Each diagnostic option carries a risk grade: **0 = safe, 1 = caution, 2 = high risk**.
 - A dimension's status = its **worst** answer (max, not average) — one critical
   red flag must not be averaged away.
-- Verdict, per Michele's framework:
-  - ✅ **0 dimensions at risk** → *Use AI Confidently*
-  - ⚠️ **1–2 at risk** → *Use AI — With Guardrails*
-  - ❌ **3+ at risk** → *Do Not Use AI Yet*
+- Verdict (`lib/quiz/engine.ts` → `tierFor`):
+  - ✅ **Tier 1 — Optimized & Resilient (Proceed & Scale):** 0–1 dimensions
+    flagged, none at "high" severity.
+  - ⚠️ **Tier 2 — Managed with Guardrails (Proceed with Conditions):** 2–3
+    dimensions flagged, none at "high" severity.
+  - ❌ **Tier 3 — Operational Roadblock (Stop & Fix Internally):** 4+
+    dimensions flagged, **or any single dimension at "high" severity** — one
+    systemic risk (e.g. no internal AI policy, untraceable data) is enough on
+    its own, regardless of how many other checks pass.
 - A 0–100 readiness score is still computed and stored for trend comparison.
 
 ## Why this produces actionable output
@@ -70,7 +79,7 @@ Levels 1–3 give every result its context; levels 4–5 do the diagnosis.
 - **Add an industry or challenge:** add an option to the `industry` /
   `challenge` node.
 - **Add a follow-up question:** add `children: [ { …QuizNode } ]` to the option
-  that should trigger it (see `am-a1` and `gr-s1` for working examples).
+  that should trigger it (see `am-a1` in `default-config.ts` for a working example).
 - **Add a new focus area:** add an option to the `area` node with a new
   diagnostic set as `children`, plus advice for it in `advice.ts` (generic
   advice is used if you skip this).

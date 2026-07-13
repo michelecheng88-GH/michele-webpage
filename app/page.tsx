@@ -74,7 +74,7 @@ export default async function HomePage() {
               Michele&apos;s story
             </p>
             <h2 className="mt-3 text-2xl font-bold md:text-3xl">
-              From managing 100,000+ devices in national programmes to helping SMEs get
+              From managing &gt;400,000+ devices in national programmes to helping SMEs get
               the basics right.
             </h2>
             <p className="mt-6 max-w-2xl text-cream-100/80">
@@ -86,8 +86,8 @@ export default async function HomePage() {
             <p className="mt-4 max-w-2xl text-cream-100/80">
               What I learned at scale applies directly to SMEs: AI cannot fix a broken
               foundation, but it can powerfully scale a healthy one. My job is to find
-              exactly which foundation piece is missing — and help you fix it before you
-              spend on a pilot that&apos;s doomed to stall.
+              exactly which foundation piece is missing and help you fix it before you
+              invest in tech that won&apos;t work.
             </p>
           </div>
         </div>
@@ -168,9 +168,10 @@ export default async function HomePage() {
           </div>
 
           <p className="mt-8 rounded-xl bg-navy-950 px-5 py-4 text-center text-sm text-cream-100/90">
-            <span className="font-semibold text-gold-400">The decision rule:</span> ✅ all 5 checks
-            pass → use AI confidently &nbsp;·&nbsp; ⚠️ 1–2 risks → use AI with controls
-            &nbsp;·&nbsp; ❌ 3+ risks → do <em>not</em> use AI. Yet.
+            <span className="font-semibold text-gold-400">The decision isn&apos;t a headcount of risks — it&apos;s their severity.</span>{" "}
+            Low risk, or risks already under control → proceed and scale.
+            &nbsp;·&nbsp; A moderate, addressable risk profile → proceed with targeted guardrails.
+            &nbsp;·&nbsp; Any systemic risk, or too many open risks → stop and fix the foundations first.
           </p>
         </div>
       </section>
@@ -179,7 +180,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="grid gap-8 rounded-3xl bg-navy-950 px-8 py-12 text-cream-50 md:grid-cols-3">
           <div>
-            <p className="text-3xl font-bold text-gold-400">100,000+</p>
+            <p className="text-3xl font-bold text-gold-400">&gt;400,000+</p>
             <p className="mt-2 text-sm text-cream-100/80">
               devices managed across national-scale programmes
             </p>

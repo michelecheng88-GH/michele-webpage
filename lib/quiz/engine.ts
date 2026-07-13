@@ -1,10 +1,22 @@
 /**
  * Scoring engine for the S.A.F.E.R. AI™ Decision Check.
  *
- * Decision rule (Michele's framework):
- *   ✅ all 5 checks pass          → use AI confidently
- *   ⚠️ 1–2 checks flag risk      → use AI, with controls
- *   ❌ 3+ checks flag risk       → do NOT use AI yet
+ * Decision rule — severity, not just a count of risks
+ * -----------------------------------------------------
+ * AI inherently carries residual risk, so governance shouldn't just count
+ * problems — it should measure the organisation's capability to handle them.
+ * Every dimension is graded pass / caution / high, and the verdict is driven
+ * by SEVERITY first, count second:
+ *
+ *   Tier 1 — Optimized & Resilient (Proceed & Scale)
+ *     Low inherent risk: 0–1 dimensions flagged, none at "high" severity.
+ *
+ *   Tier 2 — Managed with Guardrails (Proceed with Conditions)
+ *     Moderate risk profile: 2–3 dimensions flagged, none at "high" severity.
+ *
+ *   Tier 3 — Operational Roadblock (Stop & Fix Internally)
+ *     High risk profile: 4+ dimensions flagged, OR any single dimension at
+ *     "high" severity (a systemic risk) regardless of how many others pass.
  *
  * A dimension's status comes from its WORST answer (max risk), not the
  * average — one critical red flag must not be averaged away.
@@ -28,13 +40,18 @@ export type DimensionResult = {
   score: number;
 };
 
-export type VerdictId = "green" | "amber" | "red";
+export type VerdictId = "tier1" | "tier2" | "tier3";
 
 export type Verdict = {
   id: VerdictId;
-  /** Stored as quiz_responses.profile_band and shown in the admin panel. */
+  /** Full label — stored as quiz_responses.profile_band and shown in the admin panel. */
   band: string;
+  /** Short label for the result banner. */
   headline: string;
+  /** One-line decision rule for this tier. */
+  decision: string;
+  /** What-to-do-next guidance for this tier. */
+  guidance: string;
 };
 
 export type QuizContext = {
@@ -50,28 +67,40 @@ export type QuizResultPayload = {
   dimensions: DimensionResult[];
   /** 0–100 readiness percentage across all diagnostic answers. */
   totalScore: number;
-  /** Count of dimensions that flagged caution or high risk. */
+  /** Count of dimensions that flagged caution or high risk (out of 5). */
   riskCount: number;
+  /** Count of dimensions at "high" (systemic) severity, out of 5. */
+  highRiskCount: number;
   verdict: Verdict;
 };
 
 const DIMENSION_ORDER: SaferDimension[] = ["S", "A", "F", "E", "R"];
 
-const VERDICTS: Record<VerdictId, Verdict> = {
-  green: {
-    id: "green",
-    band: "Use AI Confidently",
-    headline: "Green light — use AI with confidence",
+const TIERS: Record<VerdictId, Verdict> = {
+  tier1: {
+    id: "tier1",
+    band: "Tier 1: Optimized & Resilient (Proceed & Scale)",
+    headline: "Tier 1 — Optimized & Resilient",
+    decision: "Proceed with Confidence. Scale AI investments actively.",
+    guidance:
+      "Guardrails are already embedded in the operational fabric. Focus on continuous monitoring, performance optimisation, and driving ROI.",
   },
-  amber: {
-    id: "amber",
-    band: "Use AI — With Guardrails",
-    headline: "Amber — use AI, but with guardrails",
+  tier2: {
+    id: "tier2",
+    band: "Tier 2: Managed with Guardrails (Proceed with Conditions)",
+    headline: "Tier 2 — Managed with Guardrails",
+    decision:
+      "Proceed with Targeted Controls. Invest in technology, but mandate project-specific mitigations before deployment.",
+    guidance:
+      "Don't halt procurement — but tie budget release to specific guardrails first: human-in-the-loop validation, strict access logging, or similar controls for the flagged areas below.",
   },
-  red: {
-    id: "red",
-    band: "Do Not Use AI Yet",
-    headline: "Red — fix the foundations first",
+  tier3: {
+    id: "tier3",
+    band: "Tier 3: Operational Roadblock (Stop & Fix Internally)",
+    headline: "Tier 3 — Operational Roadblock",
+    decision: "Must-Fix Internal Operations. Freeze new external AI technology procurement immediately.",
+    guidance:
+      "AI will only accelerate and scale existing bad data or broken processes — \"garbage in, garbage out.\" Divert the budget into foundational internal fixes: data cleaning, process mapping, and basic governance, before any new AI spend.",
   },
 };
 
@@ -81,12 +110,19 @@ function contextLabel(answers: QuizAnswer[], nodeId: string): string {
   return a.freeText?.trim() || a.optionLabel;
 }
 
+/** Severity-first tiering: any systemic (high) risk, or 4+ flagged dimensions, is Tier 3. */
+function tierFor(riskCount: number, highRiskCount: number): VerdictId {
+  if (highRiskCount >= 1 || riskCount >= 4) return "tier3";
+  if (riskCount >= 2) return "tier2";
+  return "tier1";
+}
+
 export function buildResultPayload(answers: QuizAnswer[]): QuizResultPayload {
   const areaAnswer = answers.find((a) => a.nodeId === "area");
   const context: QuizContext = {
     industry: contextLabel(answers, "industry"),
     challenge: contextLabel(answers, "challenge"),
-    area: areaAnswer?.optionLabel ?? "",
+    area: contextLabel(answers, "area"),
     areaId: areaAnswer?.optionId ?? "",
   };
 
@@ -116,25 +152,26 @@ export function buildResultPayload(answers: QuizAnswer[]): QuizResultPayload {
     diagnostics.length > 0 ? Math.round((totalPoints / (2 * diagnostics.length)) * 100) : 0;
 
   const riskCount = dimensions.filter((d) => d.status !== "pass").length;
-  const verdict = riskCount === 0 ? VERDICTS.green : riskCount <= 2 ? VERDICTS.amber : VERDICTS.red;
+  const highRiskCount = dimensions.filter((d) => d.status === "high").length;
+  const verdict = TIERS[tierFor(riskCount, highRiskCount)];
 
-  return { context, answers, dimensions, totalScore, riskCount, verdict };
+  return { context, answers, dimensions, totalScore, riskCount, highRiskCount, verdict };
 }
 
 /** One narrative paragraph anchored to the visitor's industry/challenge/area. */
 export function buildNarrative(payload: QuizResultPayload): string {
-  const { context, verdict, riskCount } = payload;
+  const { context, verdict } = payload;
   const industry = context.industry || "your";
   const challenge = context.challenge ? `"${context.challenge}"` : "your stated challenge";
   const area = context.area || "the area you chose";
 
-  if (verdict.id === "green") {
-    return `Based on your answers, your ${industry} business is in a strong position to apply AI to ${challenge} within ${area}. All five S.A.F.E.R. checks passed — the goal now is to move deliberately, not to wait.`;
+  if (verdict.id === "tier1") {
+    return `Based on your answers, your ${industry} business is in a strong position to apply AI to ${challenge} within ${area}. ${verdict.decision} ${verdict.guidance}`;
   }
-  if (verdict.id === "amber") {
-    return `Your ${industry} business can use AI on ${challenge} — but only with guardrails. ${riskCount} of the five S.A.F.E.R. checks flagged risks. Put the controls below in place before or alongside any pilot.`;
+  if (verdict.id === "tier2") {
+    return `Your ${industry} business can move ahead on ${challenge} within ${area} — under defined conditions. ${verdict.decision} ${verdict.guidance}`;
   }
-  return `Right now, AI would amplify problems rather than solve them for your ${industry} business. ${riskCount} of the five S.A.F.E.R. checks flagged serious gaps around ${area}. The good news: the fixes below are concrete, and most take weeks — not years.`;
+  return `Right now, AI would amplify problems rather than solve them for your ${industry} business in ${area}. ${verdict.decision} ${verdict.guidance}`;
 }
 
 /**

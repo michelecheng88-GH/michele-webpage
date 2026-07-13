@@ -10,9 +10,9 @@ import { insertLead, insertQuizResponse } from "@/lib/data/leads";
 const QUIZ_RESULT_KEY = "safer-quiz-result";
 
 const VERDICT_STYLES: Record<string, { banner: string; badge: string; icon: string }> = {
-  green: { banner: "border-green-600 bg-green-50", badge: "bg-green-600", icon: "✅" },
-  amber: { banner: "border-amber-500 bg-amber-50", badge: "bg-amber-500", icon: "⚠️" },
-  red: { banner: "border-red-600 bg-red-50", badge: "bg-red-600", icon: "❌" },
+  tier1: { banner: "border-green-600 bg-green-50", badge: "bg-green-600", icon: "✅" },
+  tier2: { banner: "border-amber-500 bg-amber-50", badge: "bg-amber-500", icon: "⚠️" },
+  tier3: { banner: "border-red-600 bg-red-50", badge: "bg-red-600", icon: "❌" },
 };
 
 const STATUS_BADGES: Record<string, { label: string; cls: string }> = {
@@ -112,12 +112,19 @@ function ResultReady({ payload }: { payload: QuizResultPayload }) {
           ))}
       </div>
 
-      {/* Decision rule */}
-      <p className="mt-6 rounded-xl bg-navy-950 px-5 py-4 text-sm text-cream-100/90">
-        <span className="font-semibold text-gold-400">The decision rule:</span> all 5 checks pass →
-        use AI confidently. 1–2 risks → use AI with controls. 3+ risks → do <em>not</em> use AI yet.
-        Your result: <span className="font-semibold text-cream-50">{payload.riskCount} of 5 checks flagged risk.</span>
-      </p>
+      {/* Result & recommendation */}
+      <div className="mt-6 rounded-xl bg-navy-950 px-5 py-5 text-sm text-cream-100/90">
+        <p>
+          <span className="font-bold text-gold-400">Your Result:</span>{" "}
+          <span className="font-semibold text-cream-50">
+            {payload.riskCount} of 5 checks flagged risk.
+          </span>
+        </p>
+        <p className="mt-4">
+          <span className="font-bold text-gold-400">The Recommendation:</span>{" "}
+          <span className="font-semibold text-cream-50">{payload.verdict.band}</span>
+        </p>
+      </div>
 
       {/* Dimension breakdown */}
       <div className="mt-8 flex flex-col gap-3">

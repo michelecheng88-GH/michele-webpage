@@ -127,7 +127,9 @@ export default function QuizPage() {
       {freeTextOption && (
         <div className="mt-4 rounded-xl border border-gold-500 bg-white p-5">
           <label className="flex flex-col gap-2 text-sm">
-            <span className="font-medium text-navy-800">Tell us your industry</span>
+            <span className="font-medium text-navy-800">
+              {current.id === "industry" ? "Tell us your industry" : "Please specify"}
+            </span>
             <input
               autoFocus
               value={freeText}

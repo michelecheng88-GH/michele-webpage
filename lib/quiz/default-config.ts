@@ -155,28 +155,12 @@ const GUARDRAIL_DIAGNOSTICS: QuizNode[] = [
     dimension: "S",
     question: "What data would your planned AI use case touch?",
     options: [
-      { id: "public", label: "Public or aggregated data only.", risk: 0 },
-      { id: "internal", label: "Internal business data — nothing personal or regulated.", risk: 1 },
-      {
-        id: "sensitive",
-        label: "Personal data (PDPA), patient data, or confidential client information.",
-        risk: 2,
-        // Level-5 follow-up: a de-escalating answer is possible here.
-        children: [
-          {
-            id: "gr-s1-type",
-            kind: "diagnostic",
-            dimension: "S",
-            question: "Which best describes the most sensitive data involved?",
-            options: [
-              { id: "pdpa", label: "Personal data covered by PDPA.", risk: 2 },
-              { id: "patient", label: "Patient or health data.", risk: 2 },
-              { id: "client-confidential", label: "Confidential client or commercial data.", risk: 1 },
-              { id: "can-scope-down", label: "Actually — we could scope the use case to non-sensitive data.", risk: 0 },
-            ],
-          },
-        ],
-      },
+      { id: "public", label: "Public or Aggregated Data", risk: 0 },
+      { id: "operational", label: "Operational & Asset Data", risk: 0 },
+      { id: "financial", label: "Financial & Accounting Data", risk: 1 },
+      { id: "compliance", label: "Compliance, Security, & Governance Data", risk: 1 },
+      { id: "customer", label: "Customer & Relationship Data", risk: 2 },
+      { id: "hr", label: "Human Resources & Workforce Data", risk: 2 },
     ],
   },
   {
@@ -185,9 +169,21 @@ const GUARDRAIL_DIAGNOSTICS: QuizNode[] = [
     dimension: "S",
     question: "Do staff already paste company information into ChatGPT or similar tools?",
     options: [
-      { id: "policy", label: "We have a policy and an approved-tools list.", risk: 0 },
-      { id: "probably", label: "Probably — there's no policy yet.", risk: 1 },
-      { id: "freely", label: "Yes, freely — including sensitive information.", risk: 2 },
+      {
+        id: "managed",
+        label: "Managed & Monitored: We have clear policies and approved tools, and usage is actively managed.",
+        risk: 0,
+      },
+      {
+        id: "untracked",
+        label: "Policy in Place, Behavior Untracked: We have a formal policy, but we lack visibility into actual employee behavior.",
+        risk: 1,
+      },
+      {
+        id: "unmonitored",
+        label: "Unmonitored / No Policy: We do not currently have a policy or a mechanism to track AI tool usage.",
+        risk: 2,
+      },
     ],
   },
   {
@@ -398,6 +394,124 @@ const SUSTAINABILITY_DIAGNOSTICS: QuizNode[] = [
 ];
 
 // ────────────────────────────────────────────────────────────────────────────
+// LEVEL 4–5 · DIAGNOSTICS — Others (generic, industry/area-agnostic)
+// Used when the visitor's problem doesn't fit the three fixed focus areas.
+// ────────────────────────────────────────────────────────────────────────────
+
+const GENERIC_DIAGNOSTICS: QuizNode[] = [
+  {
+    id: "ot-s1",
+    kind: "diagnostic",
+    dimension: "S",
+    question: "If an AI tool analysed the data behind this problem today, what would it see?",
+    options: [
+      { id: "ops-only", label: "Operational data only — nothing personal or confidential.", risk: 0 },
+      { id: "some-mixed", label: "Mostly operational, but some personal or confidential records are mixed in.", risk: 1 },
+      { id: "heavily-mixed", label: "It's heavily mixed with personal, financial, or confidential information.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-s2",
+    kind: "diagnostic",
+    dimension: "S",
+    question: "Who can currently access or export this data?",
+    options: [
+      { id: "role-based", label: "Access is role-based, and we review who has it.", risk: 0 },
+      { id: "most-staff", label: "Most staff can view it; exports aren't tracked.", risk: 1 },
+      { id: "anyone", label: "Anyone with the file or link — we've never really checked.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-a1",
+    kind: "diagnostic",
+    dimension: "A",
+    question: "How confident are you that this data is accurate and up to date?",
+    options: [
+      { id: "confident", label: "Very — it's reconciled or verified regularly.", risk: 0 },
+      { id: "mostly", label: "Mostly, with occasional gaps we can explain.", risk: 1 },
+      { id: "unsure", label: "Not very — we've been caught out by it before.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-a2",
+    kind: "diagnostic",
+    dimension: "A",
+    question: "If you pulled this data from two different sources, would the numbers match?",
+    options: [
+      { id: "always", label: "Yes, consistently.", risk: 0 },
+      { id: "small-gaps", label: "Usually, with small gaps we can explain.", risk: 1 },
+      { id: "disagree", label: "We have multiple sources of truth that disagree.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-f1",
+    kind: "diagnostic",
+    dimension: "F",
+    question: "If you applied AI to this problem tomorrow, what would success look like?",
+    options: [
+      { id: "specific", label: "A specific, measurable target with a deadline.", risk: 0 },
+      { id: "general", label: "A general goal — fewer errors, save time.", risk: 1 },
+      { id: "figure-out", label: "We'd figure it out as we go.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-f2",
+    kind: "diagnostic",
+    dimension: "F",
+    question: "Can your team name the ONE thing to fix first?",
+    options: [
+      { id: "agreed", label: "Yes — it's agreed and written down.", risk: 0 },
+      { id: "candidates", label: "We have several candidates but no agreement.", risk: 1 },
+      { id: "everything", label: "No — everything feels broken.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-e1",
+    kind: "diagnostic",
+    dimension: "E",
+    question: "When something goes wrong here, can someone explain why?",
+    options: [
+      { id: "traceable", label: "Usually — the cause and owner are traceable.", risk: 0 },
+      { id: "sometimes", label: "Sometimes, if the right person remembers.", risk: 1 },
+      { id: "ignore", label: "Honestly, we often can't explain it.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-e2",
+    kind: "diagnostic",
+    dimension: "E",
+    question: "Could you defend this process or its records to an auditor, customer, or regulator tomorrow?",
+    options: [
+      { id: "documented", label: "Yes — it's documented.", risk: 0 },
+      { id: "scramble", label: "We'd manage it, with a scramble.", risk: 1 },
+      { id: "exposed", label: "No — we'd be exposed.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-r1",
+    kind: "diagnostic",
+    dimension: "R",
+    question: "Who owns this problem in your company?",
+    options: [
+      { id: "named", label: "A named person or role.", risk: 0 },
+      { id: "shared", label: "It's shared and informal.", risk: 1 },
+      { id: "no-one", label: "No one — it's everyone's job and no one's.", risk: 2 },
+    ],
+  },
+  {
+    id: "ot-r2",
+    kind: "diagnostic",
+    dimension: "R",
+    question: "If an automated system got this wrong, what would happen?",
+    options: [
+      { id: "signoff", label: "A human signs off before changes; there's a clear escalation path.", risk: 0 },
+      { id: "case-by-case", label: "We'd sort it out case by case.", risk: 1 },
+      { id: "notice-later", label: "Nothing is defined — we'd only notice later.", risk: 2 },
+    ],
+  },
+];
+
+// ────────────────────────────────────────────────────────────────────────────
 // LEVELS 1–3 · CONTEXT FUNNEL (industry → challenge → focus area)
 // The ids "industry", "challenge" and "area" are special — keep them.
 // ────────────────────────────────────────────────────────────────────────────
@@ -460,6 +574,12 @@ export const DEFAULT_QUIZ: QuizNode[] = [
         id: "sustainability",
         label: "Sustainability & Green Compliance",
         children: SUSTAINABILITY_DIAGNOSTICS,
+      },
+      {
+        id: "other",
+        label: "Others",
+        allowFreeText: true,
+        children: GENERIC_DIAGNOSTICS,
       },
     ],
   },
