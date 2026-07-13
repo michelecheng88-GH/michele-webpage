@@ -6,7 +6,7 @@ import { useState } from "react";
 const links = [
   { href: "/services", label: "Services" },
   { href: "/blog", label: "Insights" },
-  { href: "/quiz", label: "Take the Quiz" },
+  { href: "/quiz", label: "Score Your AI" },
 ];
 
 export function NavBar() {

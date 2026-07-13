@@ -3,9 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Michele's headshot. Drop the photo at `public/michele.jpg` and it renders
- * automatically; until then (or if the file is missing) it falls back to the
- * "MC" monogram so the page is never broken.
+ * Michele's headshot, served from `public/Michele.jpg`. Falls back to the
+ * "MC" monogram if the file is missing so the page is never broken.
  */
 export function MicheleAvatar({ className = "" }: { className?: string }) {
   const [errored, setErrored] = useState(false);
@@ -35,7 +34,7 @@ export function MicheleAvatar({ className = "" }: { className?: string }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       ref={imgRef}
-      src="/michele.jpg"
+      src="/Michele.jpg"
       alt="Michele Cheng"
       onError={() => setErrored(true)}
       className={`rounded-full object-cover object-top ring-4 ring-gold-500/30 ${className}`}

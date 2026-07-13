@@ -1,4 +1,4 @@
-# michele-webpage
+# safer-ai
 
 Michele Cheng's personal branding website showcasing AI consultancy (S.A.F.E.R. AI™), program management expertise, and a lead-capture funnel with an AI-readiness quiz for SME decision-makers.
 

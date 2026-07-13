@@ -121,7 +121,7 @@ export default async function HomePage() {
                   {service.short_description}
                 </p>
                 <Link
-                  href="/services"
+                  href={`/services#tier-${service.tier_number}`}
                   className="mt-6 text-sm font-semibold text-navy-950 underline decoration-gold-500 decoration-2 underline-offset-4 hover:text-gold-500"
                 >
                   {service.cta_label} →

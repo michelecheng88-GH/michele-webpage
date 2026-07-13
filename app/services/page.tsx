@@ -46,38 +46,47 @@ export default async function ServicesPage() {
         </p>
       ) : (
         <div className="mt-14 flex flex-col gap-6">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className={`rounded-2xl border p-8 ${
-                service.is_featured
-                  ? "border-gold-500 bg-white shadow-md"
-                  : "border-navy-900/10 bg-white"
-              }`}
-            >
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="rounded-full bg-navy-950 px-3 py-1 text-xs font-semibold text-gold-400">
-                  Tier {service.tier_number}
-                </span>
-                {service.is_featured && (
-                  <span className="rounded-full bg-gold-500/10 px-3 py-1 text-xs font-semibold text-gold-500">
-                    Most popular
-                  </span>
-                )}
-              </div>
-              <h2 className="mt-4 text-2xl font-bold text-navy-950">{service.title}</h2>
-              <p className="mt-2 text-sm font-medium text-navy-800/70">
-                {service.short_description}
-              </p>
-              <p className="mt-4 text-navy-800/80">{service.full_description}</p>
-              <Link
-                href="/quiz"
-                className="mt-6 inline-block rounded-full bg-navy-950 px-6 py-3 text-sm font-semibold text-cream-50 transition hover:bg-gold-500 hover:text-navy-950"
+          {services.map((service) => {
+            const ctaHref =
+              service.tier_number === 2
+                ? "/services/pilot"
+                : service.tier_number === 4
+                  ? "/services/advisory"
+                  : "/quiz";
+            return (
+              <div
+                key={service.id}
+                id={`tier-${service.tier_number}`}
+                className={`scroll-mt-24 rounded-2xl border p-8 ${
+                  service.is_featured
+                    ? "border-gold-500 bg-white shadow-md"
+                    : "border-navy-900/10 bg-white"
+                }`}
               >
-                {service.cta_label}
-              </Link>
-            </div>
-          ))}
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="rounded-full bg-navy-950 px-3 py-1 text-xs font-semibold text-gold-400">
+                    Tier {service.tier_number}
+                  </span>
+                  {service.is_featured && (
+                    <span className="rounded-full bg-gold-500/10 px-3 py-1 text-xs font-semibold text-gold-500">
+                      Most popular
+                    </span>
+                  )}
+                </div>
+                <h2 className="mt-4 text-2xl font-bold text-navy-950">{service.title}</h2>
+                <p className="mt-2 text-sm font-medium text-navy-800/70">
+                  {service.short_description}
+                </p>
+                <p className="mt-4 text-navy-800/80">{service.full_description}</p>
+                <Link
+                  href={ctaHref}
+                  className="mt-6 inline-block rounded-full bg-navy-950 px-6 py-3 text-sm font-semibold text-cream-50 transition hover:bg-gold-500 hover:text-navy-950"
+                >
+                  {service.cta_label}
+                </Link>
+              </div>
+            );
+          })}
         </div>
       )}
     </main>

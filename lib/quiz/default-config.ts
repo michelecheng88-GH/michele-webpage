@@ -7,6 +7,8 @@
  */
 
 import type { QuizNode } from "./schema";
+import { INDUSTRIES } from "@/lib/content/industries";
+import { slugify } from "@/lib/utils/slugify";
 
 // ────────────────────────────────────────────────────────────────────────────
 // LEVEL 4–5 · DIAGNOSTICS — Physical & Digital Asset Management
@@ -522,19 +524,11 @@ export const DEFAULT_QUIZ: QuizNode[] = [
     kind: "choice",
     question: "Which industry is your business in?",
     help: "Every industry has its own failure patterns — this anchors your result.",
-    options: [
-      { id: "manufacturing", label: "Manufacturing & Precision Engineering" },
-      { id: "logistics", label: "Logistics & Supply Chain" },
-      { id: "construction", label: "Construction & Facilities Management" },
-      { id: "retail", label: "Retail & E-commerce" },
-      { id: "fnb", label: "Food & Beverage" },
-      { id: "healthcare", label: "Healthcare & Medical Services" },
-      { id: "professional", label: "Professional Services (Legal, Accounting, Consulting)" },
-      { id: "education", label: "Education & Training" },
-      { id: "events", label: "Events & MICE" },
-      { id: "wholesale", label: "Wholesale & Trading" },
-      { id: "other", label: "Others", allowFreeText: true },
-    ],
+    options: INDUSTRIES.map((label) =>
+      label === "Others"
+        ? { id: "other", label, allowFreeText: true }
+        : { id: slugify(label), label },
+    ),
   },
   {
     id: "challenge",
