@@ -180,11 +180,11 @@ function UpsellCard() {
   return (
     <div className="mt-12 rounded-2xl border-2 border-gold-500 bg-navy-950 p-7 text-cream-100">
       <p className="text-xs font-semibold uppercase tracking-widest text-gold-400">
-        Go deeper · Paid report
+        Go deeper
       </p>
       <h3 className="mt-2 text-2xl font-bold text-cream-50">The full AI Readiness Assessment</h3>
       <p className="mt-3 text-sm text-cream-100/85">
-        A comprehensive, industry-specific report ($200) that turns this snapshot into two defensible
+        A comprehensive, industry-specific report that turns this snapshot into two defensible
         numbers your board can act on:
       </p>
       <ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
@@ -192,7 +192,7 @@ function UpsellCard() {
           "AI Implementation Success Score (how ready you are today)",
           "Pilot-to-Scale Success Index™ — PSSI (will you reach scale?)",
           "Recommended actions, prioritised by severity",
-          "Delivered as an editable Word document",
+          "A comprehensive, board-ready report you can act on",
         ].map((f) => (
           <li key={f} className="flex gap-2">
             <span className="text-gold-400">◆</span>

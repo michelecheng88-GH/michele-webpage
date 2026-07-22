@@ -95,12 +95,12 @@ export default function AssessmentPage() {
     return (
       <main className="mx-auto max-w-2xl px-6 py-16">
         <p className="text-sm font-semibold uppercase tracking-widest text-gold-500">
-          AI Readiness Assessment · Paid report
+          AI Readiness Assessment
         </p>
         <h1 className="mt-3 text-3xl font-bold text-navy-950">Your comprehensive readiness report</h1>
         <p className="mt-4 text-navy-800/80">
           A few deeper questions — tailored to <span className="font-semibold text-navy-950">{ctx.label}</span> —
-          then you&apos;ll get an editable Word report with your <strong>AI Implementation Success Score</strong>,
+          then you&apos;ll get a report with your <strong>AI Implementation Success Score</strong>,
           your <strong>Pilot-to-Scale Success Index™ (PSSI™)</strong>, and prioritised actions.
         </p>
         <div className="mt-6 rounded-2xl border border-navy-900/10 bg-white p-6 text-sm text-navy-800/80">
@@ -108,15 +108,15 @@ export default function AssessmentPage() {
           <ol className="mt-3 list-decimal space-y-1 pl-5">
             <li>Answer {questions.length} deeper questions (about 4 minutes).</li>
             <li>Enter your redemption code, email and mobile number.</li>
-            <li>Your Word report downloads instantly.</li>
+            <li>Your report downloads instantly.</li>
           </ol>
           <p className="mt-4 text-xs text-navy-800/60">
-            The report is a paid service ($200). After payment you&apos;ll receive a one-time code.
+            Enter the code you received to unlock your report.
             Don&apos;t have one yet?{" "}
             <Link href="/contact" className="font-semibold text-gold-600 underline">
               Contact Michele
             </Link>{" "}
-            to purchase.
+            to request access.
           </p>
         </div>
         <button
@@ -264,7 +264,7 @@ function GateForm({
       <h1 className="mt-3 text-2xl font-bold text-navy-950">Unlock your report</h1>
       <p className="mt-2 text-sm text-navy-800/70">
         Enter your redemption code and contact details. Email and mobile are required so Michele can
-        reach you if there&apos;s any issue with your paid report.
+        reach you if there&apos;s any issue with your report.
       </p>
       <form onSubmit={submit} className="mt-6 flex flex-col gap-4">
         <label className="flex flex-col gap-1 text-sm">
@@ -296,7 +296,7 @@ function GateForm({
           <Link href="/contact" className="font-semibold text-gold-600 underline">
             Contact Michele
           </Link>{" "}
-          to purchase the $200 report.
+          to request access.
         </p>
       </form>
     </main>

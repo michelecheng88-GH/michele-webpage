@@ -204,7 +204,6 @@ export async function buildReadinessReport(input: ReportInput): Promise<Buffer> 
           // Re-score note
           h1("Keep score — readiness drifts"),
           p([t("Readiness is not a one-time number. As your data, people and processes change, so does your ability to deliver AI safely. We recommend re-scoring each quarter to track each pillar over time and confirm your gaps are closing.", { color: GRAY })]),
-          p([t("Benchmarking against peers in your sector is coming soon — future reports will show how you compare against similar organisations.", { italics: true, color: GOLD })]),
 
           // Appendix
           h1("Appendix — your inputs"),
