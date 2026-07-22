@@ -6,6 +6,7 @@
 export const INDUSTRIES: string[] = [
   "Administrative & Support Services",
   "Construction, Real Estate & Facilities Management",
+  "Financial Services, Banking & Insurance",
   "Food & Beverage (F&B) & Accommodation",
   "Health & Medical Services",
   "Information Technology (IT) & Digital Services",
