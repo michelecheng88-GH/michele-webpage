@@ -176,6 +176,44 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* SAFER implementation framework teaser */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="rounded-3xl border border-navy-900/10 bg-white p-8 md:p-12">
+          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest text-gold-500">
+                Beyond the check — the framework
+              </p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy-950">
+                The SAFER™ Implementation Framework
+              </h2>
+              <p className="mt-4 max-w-2xl text-navy-800/80">
+                The Decision Check tells you <em>whether</em> to use AI. The SAFER framework is{" "}
+                <em>how</em> you implement it — five disciplined pillars that take you from ambition to
+                enterprise scale, with two numbers your board can act on: the{" "}
+                <span className="font-semibold text-navy-950">AI Implementation Success Score</span> and
+                the <span className="font-semibold text-navy-950">Pilot-to-Scale Success Index™</span>.
+                It works the same for logistics, manufacturing, financial services, F&amp;B, retail and
+                SMEs.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {["S — Strategy", "A — Assess", "F — Fortify", "E — Execute", "R — Review"].map((p) => (
+                  <span key={p} className="rounded-full bg-cream-100 px-4 py-2 text-sm font-semibold text-navy-800">
+                    {p}
+                  </span>
+                ))}
+              </div>
+              <Link
+                href="/framework"
+                className="mt-8 inline-block rounded-full bg-navy-950 px-6 py-3 text-sm font-semibold text-cream-50 transition hover:bg-gold-500 hover:text-navy-950"
+              >
+                Explore the SAFER framework →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Social proof */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="grid gap-8 rounded-3xl bg-navy-950 px-8 py-12 text-cream-50 md:grid-cols-3">

@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 const links = [
+  { href: "/framework", label: "Framework" },
   { href: "/services", label: "Services" },
   { href: "/blog", label: "Insights" },
   { href: "/quiz", label: "Score Your AI" },
+  { href: "/resources", label: "Resources" },
 ];
 
 export function NavBar() {

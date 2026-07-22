@@ -19,6 +19,7 @@ export function AdminNav() {
   const links = [
     { href: "/admin/leads", label: "Leads" },
     { href: "/admin/blog", label: "Blog" },
+    { href: "/admin/codes", label: "Codes" },
   ];
 
   return (
