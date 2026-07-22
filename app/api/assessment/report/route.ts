@@ -41,12 +41,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Please complete the assessment questions first." }, { status: 400 });
   }
 
-  // Redeem the code first — atomic, single-use.
+  // Redeem the code first.
   let redeemed = false;
   try {
     redeemed = await redeemCode(code, email, phone);
-  } catch {
-    return NextResponse.json({ error: "We couldn't verify your code — please try again." }, { status: 500 });
+  } catch (e) {
+    const detail = e instanceof Error ? e.message : String(e);
+    return NextResponse.json(
+      { error: `We couldn't verify your code. Please try again. (Details: ${detail})` },
+      { status: 500 },
+    );
   }
   if (!redeemed) {
     return NextResponse.json(
