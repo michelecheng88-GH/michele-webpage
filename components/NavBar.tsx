@@ -7,7 +7,7 @@ const links = [
   { href: "/framework", label: "Framework" },
   { href: "/services", label: "Services" },
   { href: "/blog", label: "Insights" },
-  { href: "/quiz", label: "Score Your AI" },
+  { href: "/quiz", label: "AI Decision Checker" },
   { href: "/resources", label: "Resources" },
 ];
 

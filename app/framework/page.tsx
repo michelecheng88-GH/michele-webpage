@@ -80,13 +80,12 @@ export default function FrameworkPage() {
               </Link>
             </div>
             <div className="rounded-2xl border border-navy-900/10 bg-white p-7">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gold-500">Go deeper · paid</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-gold-500">Go deeper</p>
               <h2 className="mt-2 text-xl font-bold text-navy-950">The AI Readiness Assessment</h2>
               <p className="mt-3 text-sm text-navy-800/80">
-                A comprehensive report ($200) scoring you across all five pillars — your{" "}
+                A comprehensive report scoring you across all five pillars — your{" "}
                 <strong>AI Implementation Success Score</strong> and{" "}
-                <strong>Pilot-to-Scale Success Index™</strong> — with prioritised actions, delivered as
-                an editable Word document.
+                <strong>Pilot-to-Scale Success Index™</strong> — with prioritised actions.
               </p>
               <Link href="/assessment" className="mt-5 inline-block text-sm font-semibold text-navy-950 underline decoration-gold-500 decoration-2 underline-offset-4 hover:text-gold-500">
                 Get the Readiness Assessment →
@@ -150,7 +149,7 @@ export default function FrameworkPage() {
           </div>
           <p className="mt-6 rounded-xl bg-gold-500 px-5 py-4 text-center text-sm font-semibold text-navy-950">
             Readiness drifts as your organisation changes — re-score each quarter to track each pillar
-            over time. Peer benchmarking is coming soon.
+            over time.
           </p>
         </div>
       </section>
