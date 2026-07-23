@@ -63,8 +63,12 @@ const TIERS: Record<TierId, Verdict> = {
 };
 
 function tierFor(flagged: number, high: number): TierId {
-  if (high >= 1 || flagged >= 4) return "tier3";
-  if (flagged >= 2) return "tier2";
+  // Severity-aware but graduated. A SINGLE high-risk area is a Tier 2
+  // "proceed with conditions" — not an automatic "stop everything" Tier 3.
+  // Tier 3 is reserved for genuinely weak profiles: two or more systemic
+  // (high) risks, or most pillars flagged.
+  if (high >= 2 || flagged >= 4) return "tier3";
+  if (high >= 1 || flagged >= 2) return "tier2";
   return "tier1";
 }
 

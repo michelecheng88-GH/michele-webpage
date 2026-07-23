@@ -22,13 +22,9 @@ export default function AssessmentPage() {
       const parsed = JSON.parse(raw) as DecisionPayload;
       if (!parsed?.context || !Array.isArray(parsed?.answers)) return setPhase("no-decision");
       setDecision(parsed);
-      // restore in-progress readiness answers if any
-      const r = sessionStorage.getItem(READINESS_KEY);
-      if (r) {
-        try {
-          setAnswers(JSON.parse(r) as AnswerRecord[]);
-        } catch {}
-      }
+      // Always start the assessment fresh: clear any answers left over from a
+      // previous attempt so the respondent walks through all 10 questions.
+      sessionStorage.removeItem(READINESS_KEY);
       setPhase("intro");
     } catch {
       setPhase("no-decision");
